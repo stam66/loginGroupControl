@@ -3,7 +3,7 @@ A LiveCode group that provides a login widget.<br>
 Current version: 0.1
 
 **skLoginGroupWidget** is a group that can be copied as a self-contained entity into any card. It provides the necessary fields, decoration and buttons to create a login interface.<br>
-It is up to the developer to populate the two handlers `on login pUsername, pPassword` and `on resetPasswordForUsername pUsername` within the group's script.
+It is up to the developer to populate the two handlers `on login pUsername, pPassword` and `on resetPasswordForUsername pUsername` within the group's script.<br>
 All of the group's code is encapsulated in a hidden button "loginBehavior", assigned as a behavior to the group (right-clik to edit).
 
 
