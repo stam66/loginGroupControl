@@ -21,5 +21,5 @@ All of the group's code is encapsulated in a hidden button "loginBehavior", assi
 ### Notes
 - Currently colors are implemented as constants in the behavior script; edit the group's behavior directly from the contextual menu to change these
 - Fields are not opaque - currently textColor selection is based on luminosity of the backgroundColor of graphic "background" of the group
-- Plan is to change constants to get/set functions that service up a default if empty
-- Longer term plan is to conver this to a script widget - the big step of moving all code to a single script is now done
+- Plan is to change constants to get/set hanlders that service up a default if empty
+- Longer term plan is to convert this to a script widget - the big step of moving all code to a single script is now done
