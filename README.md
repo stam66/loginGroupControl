@@ -19,6 +19,7 @@ All of the group's code is encapsulated in a hidden button "loginBehavior", assi
 
 
 ### Notes
+- _Important_: if adding to a card, ensure the openControl message is sent to the group to ensure correct function
 - Currently colors are implemented as constants in the behavior script; edit the group's behavior directly from the contextual menu to change these
 - Fields are not opaque - currently textColor selection is based on luminosity of the backgroundColor of graphic "background" of the group
 - Plan is to change constants to get/set hanlders that service up a default if empty
