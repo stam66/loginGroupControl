@@ -25,5 +25,5 @@ All of the group's code is encapsulated in a hidden button "loginBehavior", assi
 - Currently colors are implemented as constants in the behavior script; edit the group's behavior directly from the contextual menu to change these
 - Fields are not opaque - currently textColor selection is based on luminosity of the backgroundColor of graphic "background" of the group
 - Plan is to change constants to get/set hanlders that service up a default if empty
-- Plan is to add varaible for app name so the top label changes to 'Sign into <appName>'
+- Plan is to add varaible for app name so the top label changes to 'Sign into _appName_'
 - Longer term plan is to convert this to a script widget - the big step of moving all code to a single script is now done
