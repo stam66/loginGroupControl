@@ -14,6 +14,7 @@ All of the group's code is encapsulated in a hidden button "loginBehavior", assi
 - If both fields have text (other than placeholder text) then return or enter in field triggers the loging handler, otherwise moves the selection from username to password and vice versa
 - If escape key hit, focus is removed from all elements and if fields are empty, placeholder text is shown
 - Change the backgroundColor of the graphic "background" of the group as needed - the text/placeholderText/circle color will be changed appropriately to either light or dark based on this backgroundColor
+- To change the encircling box from roundRect to rect or hidden simply edit the graphic "background" of the group. Future plan is to add this as a property to control in an API
 
 
 ### Notes
