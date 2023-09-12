@@ -1,5 +1,5 @@
 # loginGroupControl
-A LiveCode group that provides a login widget.
+A LiveCode group that provides a login widget.<br>
 Current version: 0.1
 
 **skLoginGroupWidget** is a group that can be copied as a self-contained entity into any card. It provides the necessary fields, decoration and buttons to create a login interface.<br>
