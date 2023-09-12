@@ -99,16 +99,14 @@ on openControl
 end openControl
 
 command initWidget
-    put empty into field "username" of me
-    send "closefield" to field "username" of me
-    send "exitField" to field "username" of me
-    put empty into field "password" of me
-    send "closefield" to field "password" of me
-    send "exitField" to field "password" of me
     set the hilite of widget "showPassword" of me to false
     set the showPassword of field "password" of me to false
     set the iconPresetName of widget "showPassword" of me to "eye close"
     disable button "login"
+    set the text of  field "username" of me to empty
+    set the text of field "password" of me to empty
+    select after field "username" of me
+    select after field "password" of me
     focus on nothing
 end initWidget
 
@@ -154,7 +152,7 @@ on resizeControl
     set the height of button "Login" of me to tHeight + 4
     set the width of button "Login" of me to 0.5 * tWidth
     set the loc of button "Login" of me to the loc of grc "background" of me
-    set the bottom of button "Login" to the bottom of grc "background" of me - tHeight - 10
+    set the bottom of button "Login" of me to the bottom of grc "background" of me - tHeight - 10
     // button loginBehavior (invisible)
     set the loc of button "loginBehavior" of me to the loc of grc "background" of me
     
