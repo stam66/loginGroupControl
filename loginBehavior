@@ -82,8 +82,7 @@ private command createCircle pSize, pTextColor, pBorderColor
 end createCircle
 
 private function fieldTextSize
-    local tRect, tFHeight, tTargetSize
-    put the rect of field 1 of me into tRect
+    local tFHeight, tTargetSize
     put the height of field "username" of me into tFHeight
     put round (the height of field "username" * 0.5) into tTargetSize
     repeat with x = 6 to 50
