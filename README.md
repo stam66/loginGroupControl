@@ -1,6 +1,8 @@
 # loginGroupControl
 A LiveCode group that provides a login widget.<br>
-Current version: 0.1
+Current version: 0.2 - see changelog
+
+
 
 **skLoginGroupWidget** is a group that can be copied as a self-contained entity into any card. It provides the necessary fields, decoration and buttons to create a login interface.<br>
 It is up to the developer to populate the two handlers 
@@ -12,18 +14,13 @@ All of the group's code is encapsulated in a hidden button "loginBehavior", assi
 
 ### Features
 - Resizing the group will resize fields, decorations and buttons as well as scale the text
-- The password field is obfuscated with circles that are scaled with resizing the text. Obfuscation can be toggled as expected.
-- Both username and password fields show placeholder text if empty and not selected
-- If both fields have text (other than placeholder text) then return or enter in field triggers the loging handler, otherwise moves the selection from username to password and vice versa
+- The password field is obfuscated with circles that are scaled with resizing the text. Obfuscation can be toggled as expected
+- Both username and password fields show placeholder text if empty and not in focus
 - If escape key hit, focus is removed from all elements and if fields are empty, placeholder text is shown
-- Change the backgroundColor of the graphic "background" of the group as needed - the text/placeholderText/circle color will be changed appropriately to either light or dark based on this backgroundColor
-- To change the encircling box from roundRect to rect or hidden simply edit the graphic "background" of the group. Future plan is to add this as a property to control in an API
-
+- Almost all settings (eg button style, background style, colors etc) are properties of the group that can be get/set
+- The stack allows direct manipulation of properties of any selected loginGroup - if none are selected, the default is used for changes and can be copied to any stack
 
 ### Notes
-- _Important_: if adding to a card, ensure the openControl message is sent to the group to ensure correct function
-- Currently colors are implemented as constants in the behavior script; edit the group's behavior directly from the contextual menu to change these
+- If adding to a card, ensure the openControl message is sent to the group to ensure correct function
 - Fields are not opaque - currently textColor selection is based on luminosity of the backgroundColor of graphic "background" of the group
-- Plan is to change constants to get/set hanlders that service up a default if empty
-- Plan is to add varaible for app name so the top label changes to 'Sign into _appName_'
 - Longer term plan is to convert this to a script widget - the big step of moving all code to a single script is now done
