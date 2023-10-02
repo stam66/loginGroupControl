@@ -1,6 +1,6 @@
 # loginGroupControl
 A LiveCode group that provides a login widget.<br>
-Current version: 0.2 - see changelog
+Current version: 0.2 - [see changelog](/changelog.md)
 
 
 
@@ -10,7 +10,8 @@ It is up to the developer to populate the two handlers
 - `on resetPasswordForUsername pUsername` within the group's script.<br>
 All of the group's code is encapsulated in a hidden button "loginBehavior", assigned as a behavior to the group (right-clik to edit).
 
-<img width="460" alt="Screenshot 2023-09-12 at 19 05 14" src="https://github.com/stam66/loginGroupControl/assets/5677273/dea143c7-a59a-4af2-ae04-12b8131177df">
+<img width="838" alt="Screenshot 2023-10-03 at 00 00 26" src="https://github.com/stam66/loginGroupControl/assets/5677273/fc881bd6-d3db-4c19-ab80-25f89d125f2c">
+
 
 ### Features
 - Resizing the group will resize fields, decorations and buttons as well as scale the text
