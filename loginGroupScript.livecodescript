@@ -1,4 +1,4 @@
-script "loginGroupScript"
+--script "loginGroupScript"
 
 #### PROPERTIES ####
 // dark text color
@@ -156,6 +156,19 @@ setProp uBackgroundStyle pStyle
     updateVisualControls
 end uBackgroundStyle
 
+// background roundRadius
+getProp uBackgroundRadius
+    local tRadius 
+    put the uBackgroundRadius of me into tRadius
+    if tRadius is empty then put 15 into tRadius
+    return tRadius
+end uBackgroundRadius
+
+setProp uBackgroundRadius pRadius
+    set the uBackgroundRadius of me to pRadius
+    updateVisualControls
+end uBackgroundRadius
+
 // backgroundColor
 getProp uBackgroundColor 
     local tColor
@@ -179,7 +192,7 @@ setProp uAppLabel pLabel
     updateVisualControls
 end uAppLabel
 
-// button style : standard | transparent | opaque | roundRect
+// button style : roundRect | rectangle | transparent
 getProp uButtonStyle
     local tStyle
     put the uButtonStyle of me into tStyle
@@ -191,6 +204,20 @@ setProp uButtonStyle pStyle
     set the uButtonStyle of me to pStyle
     updateVisualControls
 end uButtonStyle
+
+// button roundRadius 
+getProp uButtonRadius
+    local tRadius 
+    put the uButtonRadius of me into tRadius
+    if tRadius is empty then put 15 into tRadius
+    return tRadius
+end uButtonRadius
+
+setProp uButtonRadius pRadius
+    set the uButtonRadius of me to pRadius
+    updateVisualControls
+end uButtonRadius
+
 #### /PROPERTIES ####
 
 
@@ -234,10 +261,10 @@ command layoutVisualControls
     set the top of field "resetPassword" of me to the bottom of field "password" of me + 2
     set the right of field "resetPassword" of me to the right of field "password" of me
     // button login
-    set the height of button "Login" of me to tHeight + 4
-    set the width of button "Login" of me to 0.5 * tWidth
-    set the loc of button "Login" of me to the loc of grc "background" of me
-    set the bottom of button "Login" of me to the bottom of grc "background" of me - tHeight - 10
+    set the height of graphic "Login" of me to tHeight + 4
+    set the width of graphic "Login" of me to 0.5 * tWidth
+    set the loc of graphic "Login" of me to the loc of grc "background" of me
+    set the bottom of graphic "Login" of me to the bottom of grc "background" of me - tHeight - 10
     // button loginBehavior (invisible)
     set the loc of button "loginBehavior" of me to the loc of grc "background" of me
     
@@ -248,12 +275,7 @@ end layoutVisualControls
 
 command updateVisualControls
     // background
-    if the uBackgroundStyle of me is "invisible" then 
-        set the visible of graphic "background" of me to false
-    else
-        set the visible of graphic "background" of me to true
-    end if
-    set the style of graphic "background" of me to the uBackgroundStyle of me
+    setBackgroundStyle the uBackgroundStyle of me
     set the backgroundColor of graphic "background" of me to the uBackgroundColor of me
     set the borderColor of graphic "background" of me to the uBorderColor of me
     // fields
@@ -271,12 +293,36 @@ command updateVisualControls
     // resetPassword
     set the textColor of field "resetPassword" of me to the uHiliteColor of me
     // login button
-    set the borderColor of button "Login" of me to the uBorderColor of me
-    set the style of button "Login" of me to the uButtonStyle of me
+    set the borderColor of graphic "Login" of me to the uBorderColor of me
+    setButtonStyle the uButtonStyle of me
     // update layout
     layoutVisualControls
 end updateVisualControls
 
+command setBackgroundStyle pStyle
+    set the visible of graphic "background" of me to the uBackgroundStyle of me <> "invisible"
+    set the roundRadius of graphic "background" of me to the uBackroundRadius of me
+    switch pStyle
+        case "roundRect"
+        case "rectangle"
+            set the style of graphic "background" of me to pStyle
+    end switch
+end setBackgroundStyle
+
+command setButtonStyle pStyle
+    set the visible of graphic "login" of me to the uButtonStyle of me <> "transparent"
+    set the roundRadius of graphic "Login" of me to the uButtonRadius of me
+    switch pStyle
+        case "rectangle"
+        case "roundRect"
+            set the style of graphic "Login" of me to pStyle
+    end switch
+    if the disabledFlag of graphic "login" of me then
+        set the foregroundColor of graphic "login" of me to textColorForBackground(the uBackgroundColor of me, true)
+    else
+        set the foregroundColor of graphic "login" of me to textColorForBackground(the uBackgroundColor of me, false)
+    end if
+end setButtonStyle
 
 # set text sizes and colors
 private command formatFieldText pSize, pTextColor, pBorderColor
@@ -302,7 +348,7 @@ private command formatFieldText pSize, pTextColor, pBorderColor
     set the foregroundColor of widget "password" to pBorderColor
     set the foregroundColor of widget "showPassword" to pBorderColor
     // buttons
-    set the textsize of button "Login" of me to pSize
+    set the textsize of graphic "Login" of me to pSize
     // create image to obscure password
     createCircle pSize, pTextColor, pBorderColor
     // center text vertically
@@ -371,7 +417,7 @@ command initWidget
     set the hilite of widget "showPassword" of me to false
     set the showPassword of field "password" of me to false
     set the iconPresetName of widget "showPassword" of me to "eye close"
-    disable button "login"
+    disable graphic "Login"
     set the text of  field "username" of me to empty
     set the text of field "password" of me to empty
     select after field "username" of me
@@ -391,9 +437,9 @@ on mouseDown
             break
             
         case "login"
-            if button "login" of me is disabled then exit mouseDown
-            set the backgroundColor of button "login" of me to the uHiliteColor of me
-            set the textColor of button "login" of me to textColorForBackground(the uHiliteColor of me, false)
+            if the disabled of graphic "Login" of me  then exit mouseDown
+            set the backgroundColor of graphic "Login" of me to the uPressedColor of me
+            set the foregroundColor of graphic "login" of me to textColorForBackground(the uPressedColor of me, false)
             break
     end switch
     
@@ -407,9 +453,9 @@ on mouseRelease
             break
             
         case "login"
-            if button "login" of me is disabled then exit mouseRelease
-            set the backgroundColor of button "login" of me to the uBackgroundColor of me
-            set the textColor of button "login" of me to textColorForBackground(the uBackgroundColor of me, false)
+            if the disabled of graphic "Login"  then exit mouseRelease
+            set the backgroundColor of graphic "Login" of me to the uBackgroundColor of me
+            set the textColor of graphic "Login" of me to textColorForBackground(the uBackgroundColor of me, false)
             break
     end switch
 end mouseRelease
@@ -417,9 +463,9 @@ end mouseRelease
 on mouseUp
     switch the short name of the target
         case "Login"
-            if button "login" of me is disabled then exit mouseUp
-            set the backgroundColor of button "login" of me to the uBackgroundColor of me
-            set the textColor of button "login" of me to textColorForBackground(the uBackgroundColor of me, false)
+            if the disabled of graphic "Login" of me then exit mouseUp
+            set the backgroundColor of graphic "Login" of me to the uBackgroundColor of me
+            set the textColor of graphic "Login" of me to textColorForBackground(the uBackgroundColor of me, false)
             loginWithUsernameAndPassword field "username" of me, field "password" of me
             break
             
@@ -468,7 +514,7 @@ function textColorForBackground pColor, pDisabled
         put item 3 of pColor into b
     end if
     // put sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b)) into hsp
-    put (0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))/255 into hsp
+    put (0.299 * r + 0.587 * g + 0.114 * b)/255 into hsp
     if hsp >  0.5 then // 127.5 then
         if pDisabled then
             return the uTextColorDarkDisabled of me
@@ -494,6 +540,46 @@ function RGBFromColorName pColorName
 	delete last button
 	return tRGBColor
 end RGBFromColorName
+
+# return dark textColor for light backgrounds & vice versa
+# command for external use - return in The Result
+command textColorForBackgroundCommand pColor, pDisabled
+    local hsp, r, g, b
+    if char 1 of pColor is "#" and length(pColor) = 7 then  // hex in format #xxxxxx
+        put baseConvert(char 2 to 3 of pColor, 16, 10) into r
+        put baseConvert(char 4 to 5 of pColor, 16, 10) into g
+        put baseConvert(char 6 to 7 of pColor, 16, 10) into b
+    else if length(pColor) = 6 then                         // hex in format xxxxxx
+        put baseConvert(char 1 to 2 of pColor, 16, 10) into r
+        put baseConvert(char 3 to 4 of pColor, 16, 10) into g
+        put baseConvert(char 5 to 6 of pColor, 16, 10) into b
+    else if pColor contains ","  then                       // rbg triplet
+        put item 1 of pColor into r
+        put item 2 of pColor into g
+        put item 3 of pColor into b
+    else                                                    // colorName
+        put RGBFromColorName (pColor) into pColor
+        if pColor = "Error: not a color" then return "red"  // red text signifies error(s)...
+        put item 1 of pColor into r
+        put item 2 of pColor into g
+        put item 3 of pColor into b
+    end if
+    // put sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b)) into hsp
+    put (0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))/255 into hsp
+    if hsp >  0.5 then // 127.5 then
+        if pDisabled then
+            return the uTextColorDarkDisabled of me
+        else
+            return the uTextColorDark of me
+        end if
+    else
+        if pDisabled then
+            return the uTextColorLightDisabled of me
+        else
+            return the uTextColorLIght of me
+        end if
+    end if
+end textColorForBackgroundCommand
 
 ##################################
 ##   PLACEHOLDERTEXT FUNCTIONS  ##
@@ -548,12 +634,15 @@ end exitField
 
 on textChanged
     if sFieldID is empty then exit to top
-    if field "username" of me is empty or field "password" of me is empty then
-        set the enabled of button "login" of me to false
+    if  textFieldIsEmpty(the long id of field "username" of me) or textFieldIsEmpty(the long id of field "password" of me) then
+        --        set the enabled of graphic "Login" of me to false
+        set the disabledFlag of graphic "Login" of me to true
     else
-        set the enabled of button "login" of me to true
+        --        set the enabled of graphic "Login" of me to true
+        set the disabledFlag of graphic "Login" of me to false
     end if
-   if the showPassword of sFieldID is not empty then showHideText
+    setButtonStyle the uButtonStyle of me
+    if the showPassword of sFieldID is not empty then showHideText
 end textChanged
 
 
@@ -594,7 +683,7 @@ on rawKeyDown pKeyCode // trap return/enter in fields
         case 65293 // return
         case 65421 // enter
             if not textFieldIsEmpty(the long id of field "username" of me) and not textFieldIsEmpty(the long id of field "password" of me) then
-                click at the loc of button "Login" of me
+                click at the loc of graphic "Login" of me
             else
                 if "username" is in the long name of sFieldID then 
                     select after field "password" of me
