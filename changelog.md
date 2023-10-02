@@ -4,5 +4,5 @@ Version 0.2
 - Fixed an issue with the algorithm for detecting correct (dark or light) color for a given background
 - Streamlined stack for disstribution (as palette / plugin) - all properties are settable in stack. Select a loginGroup on a different stack and click the select button at top to change that instead.
 
-Version 0.1
+Version 0.1 
 - initial version
